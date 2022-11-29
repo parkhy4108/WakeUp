@@ -1,4 +1,4 @@
-package com.dev_musashi.wakeup.data.model
+package com.dev_musashi.wakeup.domain
 
 data class Setting(
     val time : Int,

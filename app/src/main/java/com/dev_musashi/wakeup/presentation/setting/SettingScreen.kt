@@ -1,6 +1,6 @@
 package com.dev_musashi.wakeup.presentation.setting
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,9 +11,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -32,37 +32,16 @@ fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(25.dp, 20.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Setting", modifier = Modifier
-                    .padding(5.dp), fontSize = 25.sp, color = Color.White
-            )
-            TextButton(
-                onClick = {
-                    viewModel.showDialog()
-                }
-            ) {
-                Text(text = "저장", color = Color.White)
-            }
-        }
-
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth(),
-            color = Color.Gray,
-            thickness = 1.dp
+        CustomTopBar(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.showDialog() }
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Column(
-            modifier = Modifier
-                .padding(7.dp),
+            modifier = Modifier.padding(3.dp, 0.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -71,132 +50,95 @@ fun SettingScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "시간(최대 간격: 5분 ,최소: 1분)",
-                    fontSize = 20.sp,
-                    color = Color.White
+                    text = "Interval",
+                    fontSize = 22.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
                 )
                 Row(
                     modifier = Modifier,
-                    horizontalArrangement = Arrangement.SpaceAround,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(
-                        onClick = { viewModel.timeMinus() }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_back),
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = null,
+                        tint = Color(0xFFB8B8B8),
+                        modifier = Modifier.clickable {  viewModel.timeMinus()  },
+                    )
                     Text(text = state.time.toString(), color = Color.White)
-
-                    IconButton(
-                        onClick = { viewModel.timePlus() }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_forward),
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_forward),
+                        contentDescription = null,
+                        tint = Color(0xFFB8B8B8),
+                        modifier = Modifier.clickable { viewModel.timePlus() }
+                    )
                 }
             }
-            Spacer(modifier = Modifier.height(20.dp))
-
-            BigTitle(
+            MenuItem(
                 modifier = Modifier.fillMaxWidth(),
-                text = "소리",
+                text = "Sound",
                 state = state.soundSwitch,
                 onClick = { viewModel.soundSwitch() }
             )
-
-            if (state.soundSwitch) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = "벨소리 설정", color = Color.White)
-                        TextButton(
-                            onClick = { viewModel.showRingtoneDialog() }
-                        ) {
-                            Text(text = "선택", color = Color.White)
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(state.ringtoneTitle, color = Color.White, fontSize = 10.sp)
-                }
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Select Ringtone", color = Color.White , fontWeight = FontWeight.Light)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_forward),
+                    contentDescription = null,
+                    tint = Color(0xFFB8B8B8),
+                    modifier = Modifier.clickable { viewModel.showRingtoneDialog() }
+                )
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            BigTitle(
+            MenuItem(
                 modifier = Modifier.fillMaxWidth(),
-                text = "진동",
+                text = "Vibration",
                 state = state.vibrationSwitch,
                 onClick = { viewModel.vibrationSwitch() }
             )
-            Spacer(modifier = Modifier.height(20.dp))
-
-            BigTitle(
+            MenuItem(
                 modifier = Modifier.fillMaxWidth(),
                 text = "구구단",
                 state = state.problemSwitch,
                 onClick = { viewModel.problemSwitch() }
             )
-            if (state.problemSwitch) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "개수",
+                    fontSize = 15.sp,
+                    color = Color.White
+                )
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "구구단 문제(최대: 5문제, 최소: 1문제)",
-                        fontSize = 15.sp,
-                        color = Color.White
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = null,
+                        tint = Color(0xFFB8B8B8),
+                        modifier = Modifier.clickable { viewModel.problemMinus() }
                     )
-                    Row(
-                        modifier = Modifier,
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(
-                            onClick = { viewModel.problemMinus() }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_back),
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                        }
-                        Text(text = state.problemCnt.toString(), color = Color.White)
-
-                        IconButton(
-                            onClick = { viewModel.problemPlus() }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_forward),
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-
-                        }
-                    }
+                    Text(text = state.problemCnt.toString(), color = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_forward),
+                        contentDescription = null,
+                        tint = Color(0xFFB8B8B8),
+                        modifier = Modifier.clickable {  viewModel.problemPlus()  }
+                    )
                 }
             }
-
         }
-
-
     }
 
     if (state.showDialog) {
@@ -265,30 +207,5 @@ fun SettingScreen(
 
             }
         }
-    }
-}
-
-@Composable
-fun BigTitle(
-    modifier: Modifier = Modifier,
-    text: String,
-    state: Boolean,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = text,
-            fontSize = 20.sp,
-            color = Color.White
-        )
-        Switch(
-            checked = state,
-            onCheckedChange = { onClick() },
-            colors = SwitchDefaults.colors(Color.White)
-        )
     }
 }

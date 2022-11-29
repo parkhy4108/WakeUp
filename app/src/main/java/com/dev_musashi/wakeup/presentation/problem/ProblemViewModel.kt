@@ -32,6 +32,7 @@ class ProblemViewModel @Inject constructor(
     private val answer get() = state.value.answer
 
     fun start(popUp: () -> Unit) {
+        state.value = state.value.copy(init = true)
         viewModelScope.launch {
             sharedPrefRepository.getSetting().collectLatest {
                 val sound = it.sound
@@ -43,7 +44,6 @@ class ProblemViewModel @Inject constructor(
                 if (sound) {
                     ringtoneService.ringSelectedRingtone(ringtoneUri)
                 }
-
                 if (vibration) {
                     timerTask = timer(period = 1000) {
                         vibratorService.vibrating()
@@ -104,51 +104,3 @@ class ProblemViewModel @Inject constructor(
     }
 
 }
-
-
-//for (i in problemCnt..1) {
-//    timer = object : CountDownTimer(6000, 1000) {
-//        val left = range.random()
-//        val right = range.random()
-//        override fun onTick(millisUntilFinished: Long) {
-//            state.value = state.value.copy(leftNum = left, rightNum = right)
-//            state.value = state.value.copy(timer = (millisUntilFinished / 1000).toInt())
-//            if (answer == (left * right).toString()) {
-//                state.value = state.value.copy(check = "정답!", answer = "")
-//                timer.onFinish()
-//            }
-//        }
-//
-//        override fun onFinish() {
-//            if (answer != (left * right).toString()) {
-//                state.value = state.value.copy(check = "시간 초과", answer = "")
-//            }
-//        }
-//    }
-//    timer.start()
-//}
-
-
-//timer = object : CountDownTimer(6000, 1000) {
-//    val left = range.random()
-//    val right = range.random()
-//    override fun onTick(millisUntilFinished: Long) {
-//        state.value = state.value.copy(leftNum = left, rightNum = right)
-//        state.value = state.value.copy(timer = (millisUntilFinished / 1000).toInt())
-//        if (answer == (left * right).toString()) {
-//            state.value = state.value.copy(check = "정답!")
-//            timer.onFinish()
-//        }
-//    }
-//
-//    override fun onFinish() {
-//        Log.d("TAG", answer)
-//        if (answer != (left * right).toString()) {
-//            state.value = state.value.copy(check = "시간 초과", answer = "")
-//        }
-//        if(cnt>0) {
-//            cnt--
-//            timer.start()
-//        }
-//    }
-//}.start()

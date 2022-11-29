@@ -9,6 +9,7 @@ import com.dev_musashi.wakeup.domain.RingtoneService
 import com.dev_musashi.wakeup.domain.SharedPrefRepository
 import com.dev_musashi.wakeup.domain.VibratorService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
@@ -40,7 +41,7 @@ class OnOffViewModel @Inject constructor(
 
     fun initSetting() {
         viewModelScope.launch {
-            sharedPrefRepository.getSetting().collectLatest {
+            sharedPrefRepository.getSetting().cancellable().collectLatest {
                 startTime = (it.time * 60000).toLong()
                 leftTime = (it.time * 60000).toLong()
                 sound = it.sound
@@ -49,6 +50,7 @@ class OnOffViewModel @Inject constructor(
                 problemCnt = it.problemCnt
                 ringtoneUri = it.ringtoneUri
                 updateCountDownText()
+//                cancel()
             }
         }
     }

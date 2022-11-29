@@ -69,7 +69,6 @@ fun Splash(alpha: Float) {
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Cursive
-
             )
         }
 

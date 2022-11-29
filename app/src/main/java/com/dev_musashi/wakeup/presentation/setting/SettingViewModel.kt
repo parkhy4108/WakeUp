@@ -25,7 +25,6 @@ class SettingViewModel @Inject constructor(
     private val time get() = state.value.time
     private val sound get() = state.value.soundSwitch
     private val vibration get() = state.value.vibrationSwitch
-    private val earPhone get() = state.value.earPhoneSwitch
     private val problem get() = state.value.problemSwitch
     private val problemCnt get() = state.value.problemCnt
     private val ringtoneTitle get() = state.value.ringtoneTitle
@@ -68,9 +67,9 @@ class SettingViewModel @Inject constructor(
                 ringtoneTitle = finalTitle,
                 ringtoneUri = finalUri
             )
+            state.value = state.value.copy(showDialog = false)
+            SnackBarManager.showMessage(R.string.saveDone)
         }
-        state.value = state.value.copy(showDialog = false)
-        SnackBarManager.showMessage(R.string.saveDone)
     }
 
     fun onDialogCancel() {
@@ -118,20 +117,6 @@ class SettingViewModel @Inject constructor(
 
     fun vibrationSwitch() {
         state.value = state.value.copy(vibrationSwitch = !vibration)
-//        if (vibration) {
-//            state.value = state.value.copy(vibrationSwitch = !vibration)
-//            vibrator.cancel()
-//            timerTask?.cancel()
-//        } else {
-//            state.value = state.value.copy(vibrationSwitch = !vibration)
-//            timerTask = timer(period = 3000) {
-//                vibrator.vibrating()
-//            }
-//        }
-    }
-
-    fun earPhoneSwitch() {
-        state.value = state.value.copy(earPhoneSwitch = !earPhone)
     }
 
     fun problemSwitch() {

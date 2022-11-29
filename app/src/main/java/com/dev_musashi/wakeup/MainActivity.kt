@@ -1,9 +1,6 @@
 package com.dev_musashi.wakeup
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Vibrator
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,11 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.dev_musashi.wakeup.common.ARG_KEY
 import com.dev_musashi.wakeup.common.BottomBarScreen
 import com.dev_musashi.wakeup.common.BottomNavigationBar
 import com.dev_musashi.wakeup.common.Screen

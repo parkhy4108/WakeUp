@@ -3,7 +3,7 @@ package com.dev_musashi.wakeup.data.repository
 import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
-import com.dev_musashi.wakeup.data.model.Setting
+import com.dev_musashi.wakeup.domain.Setting
 import com.dev_musashi.wakeup.domain.SharedPrefRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -35,7 +35,7 @@ class SharedPrefRepositoryImpl @Inject constructor(
                 val time = pref[timeKey]?: 0
                 val sound = pref[soundKey]?: false
                 val vibration = pref[vibratorKey]?: false
-                val problem = pref[vibratorKey]?: false
+                val problem = pref[problemKey]?: false
                 val problemCnt = pref[problemCntKey]?: 3
                 val ringtoneTitle = pref[ringtoneTitleKey]?: ""
                 val ringtoneUri = pref[ringtoneUriKey]?: "미지정"
