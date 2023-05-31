@@ -6,6 +6,7 @@ import android.media.RingtoneManager
 import androidx.core.net.toUri
 import com.dev_musashi.wakeup.domain.RingtoneService
 import javax.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 class RingtoneServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
