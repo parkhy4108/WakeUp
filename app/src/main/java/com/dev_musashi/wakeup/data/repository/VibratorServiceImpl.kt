@@ -8,11 +8,11 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import com.dev_musashi.wakeup.domain.VibratorService
-
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class VibratorServiceImpl @Inject constructor(
-    private val application: Application
+    @ApplicationContext val context: Context
 ) : VibratorService {
 
     override fun vibrating() {
