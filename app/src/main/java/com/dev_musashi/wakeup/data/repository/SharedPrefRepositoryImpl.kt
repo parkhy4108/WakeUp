@@ -12,7 +12,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class SharedPrefRepositoryImpl @Inject constructor(
-    private val context: Context
+    @ApplicationContext val context: Context
 ) : SharedPrefRepository {
 
     private val Context.dataStore by preferencesDataStore(name = "setting")
