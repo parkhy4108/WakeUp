@@ -33,7 +33,7 @@ class RingtoneServiceImpl @Inject constructor(
         ringtone?.play()
     }
 
-    override fun onDestroy() {
+    override fun cancel() {
         ringtone?.stop()
     }
 

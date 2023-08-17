@@ -106,7 +106,7 @@ class ProblemViewModel @Inject constructor(
     private fun back(popUp: () -> Unit) {
         vibratorService.cancel()
         timerTask?.cancel()
-        ringtoneService.onDestroy()
+        ringtoneService.cancel()
         popUp()
     }
 
@@ -114,7 +114,7 @@ class ProblemViewModel @Inject constructor(
         super.onCleared()
         vibratorService.cancel()
         timerTask?.cancel()
-        ringtoneService.onDestroy()
+        ringtoneService.cancel()
     }
 
 }

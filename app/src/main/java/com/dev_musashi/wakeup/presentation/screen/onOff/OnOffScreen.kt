@@ -46,7 +46,7 @@ fun OnOffScreen(
     val state by viewModel.state
     val infiniteTransition = rememberInfiniteTransition()
     val scale =
-        if (state.buttonState) {
+        if (state.isTimerClicked) {
             infiniteTransition.animateFloat(
                 initialValue = 1f,
                 targetValue = 1.2f,
@@ -61,8 +61,8 @@ fun OnOffScreen(
 
     LaunchedEffect(Unit) {
         viewModel.initSetting()
-        if (state.buttonState && !viewModel.timerRunning) {
-            viewModel.startCountdownTimer(open)
+        if (state.isTimerClicked) {
+            viewModel.startTimer(open)
         }
     }
 
@@ -87,7 +87,7 @@ fun OnOffScreen(
             ) {
                 Button(
                     modifier = Modifier.fillMaxSize(),
-                    onClick = { viewModel.buttonClick(open) },
+                    onClick = { viewModel.onTimerClicked(open) },
                     shape = CircleShape,
                     border = BorderStroke(2.dp, Color.White),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF1B379C))
@@ -103,19 +103,19 @@ fun OnOffScreen(
         }
         Spacer(modifier = Modifier.height(20.dp))
         Switch(
-            checked = state.buttonState,
-            onCheckedChange = { viewModel.buttonClick(open) },
+            checked = state.isTimerClicked,
+            onCheckedChange = { viewModel.onTimerClicked(open) },
             colors = SwitchDefaults.colors(
                 uncheckedThumbColor = Color.DarkGray
             )
         )
     }
-    if (state.showDialog) {
+    if (state.isDialogShowed) {
         AlertDialog(
             onDismissRequest = { },
             text = { Text(text = "알림") },
             confirmButton = {
-                TextButton(onClick = { viewModel.onConfirmClicked(open) })
+                TextButton(onClick = { viewModel.onDialogOkayClicked(open) })
                 { Text(text = stringResource(id = R.string.confirm)) }
             },
         )

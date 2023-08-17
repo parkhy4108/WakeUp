@@ -18,17 +18,17 @@ class VibratorServiceImpl @Inject constructor(
     override fun vibrating() {
         val pattern = longArrayOf(100, 200, 100, 200, 100, 200)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager =
-                context.applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            val vibrationEffect = VibrationEffect.createWaveform(pattern, -1)
+            val vibratorManager = context.applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrationEffect = VibrationEffect.createWaveform(pattern, 0)
             val combinedVibration = CombinedVibration.createParallel(vibrationEffect)
             vibratorManager.vibrate(combinedVibration)
         } else  {
             val vibrator = context.applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
+                val vibrationEffect = VibrationEffect.createWaveform(pattern, 0)
+                vibrator.vibrate(vibrationEffect)
             } else {
-                vibrator.vibrate(pattern,-1)
+                vibrator.vibrate(pattern,0)
             }
         }
     }

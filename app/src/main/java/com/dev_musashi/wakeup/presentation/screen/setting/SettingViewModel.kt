@@ -115,7 +115,7 @@ class SettingViewModel @Inject constructor(
     fun clickRingtoneItem(item: Pair<String,String>) {
         tempTitle = item.first
         tempUri = item.second
-        ringtoneService.onDestroy()
+        ringtoneService.cancel()
         state.value = state.value.copy(
             radioSelected = item.first
         )
@@ -123,7 +123,7 @@ class SettingViewModel @Inject constructor(
     }
 
     fun onDismissRingtoneDialog(){
-        ringtoneService.onDestroy()
+        ringtoneService.cancel()
         state.value = state.value.copy(showRingtoneDialog = false)
     }
 

@@ -6,6 +6,6 @@ interface RingtoneService {
 
     fun ringSelectedRingtone(uri: String)
 
-    fun onDestroy()
+    fun cancel()
 
 }
