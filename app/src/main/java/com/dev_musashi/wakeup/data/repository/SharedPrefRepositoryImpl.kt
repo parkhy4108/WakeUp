@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 class SharedPrefRepositoryImpl @Inject constructor(
     @ApplicationContext val context: Context
@@ -34,7 +33,7 @@ class SharedPrefRepositoryImpl @Inject constructor(
                 else throw exception
             }
             .map { pref ->
-                val time = pref[timeKey]?: 0
+                val time = pref[timeKey]?: 1
                 val sound = pref[soundKey]?: false
                 val vibration = pref[vibratorKey]?: false
                 val problem = pref[problemKey]?: false

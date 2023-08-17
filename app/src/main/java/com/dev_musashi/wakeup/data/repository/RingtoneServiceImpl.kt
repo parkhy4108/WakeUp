@@ -8,11 +8,10 @@ import com.dev_musashi.wakeup.domain.RingtoneService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
 class RingtoneServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : RingtoneService {
-    
+
     private var ringtone: Ringtone? = null
 
     override fun getRingtoneList(): List<Pair<String, String>> {

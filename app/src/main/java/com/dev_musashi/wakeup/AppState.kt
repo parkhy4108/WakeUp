@@ -11,11 +11,11 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dev_musashi.wakeup.common.BottomBarScreen
-import com.dev_musashi.wakeup.presentation.onOff.OnOffViewModel
-import com.dev_musashi.wakeup.util.SnackBarManager
-import com.dev_musashi.wakeup.util.SnackBarMessage.Companion.toMessage
+import com.dev_musashi.wakeup.presentation.navigation.BottomBarScreen
+import com.dev_musashi.wakeup.presentation.util.SnackBarManager
+import com.dev_musashi.wakeup.presentation.util.SnackBarMessage.Companion.toMessage
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,14 +47,14 @@ class AppState(
 
     init {
         coroutineScope.launch {
-            val text = snackBarManager.snackMessage.value.toString()
-            snackBarManager.snackMessage.collect { messages ->
-                if (messages != null && text != messages.toString()) {
-                    scaffoldState.snackbarHostState.showSnackbar(messages.toMessage(resources))
-                }
+            snackBarManager.snackMessage.filterNotNull().collect { snackBarMessage ->
+                val text = snackBarMessage.toMessage(resources)
+                scaffoldState.snackbarHostState.showSnackbar(text)
+                snackBarManager.initMessage()
             }
         }
     }
+
 
     val bottomBarTabs =
         listOf(BottomBarScreen.OnOff, BottomBarScreen.Setting)
@@ -78,14 +78,6 @@ class AppState(
         }
     }
 
-    fun startBottomBarDestination(route: String) {
-        navController.graph.setStartDestination(BottomBarScreen.OnOff.route)
-        navController.navigate(route) {
-            launchSingleTop = true
-            popUpTo(0) { inclusive = true }
-        }
-    }
-
     fun popUp() {
         navController.popBackStack()
     }
@@ -93,13 +85,6 @@ class AppState(
     fun navigate(route: String) {
         navController.navigate(route) {
             launchSingleTop = true
-        }
-    }
-
-    fun navigateAndPopUp(route: String, popUp: String) {
-        navController.navigate(route){
-            launchSingleTop = true
-            popUpTo(popUp) { inclusive = true }
         }
     }
 

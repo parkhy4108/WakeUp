@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">졸음방지 알람</string>
+    <string name="app_name">Timer</string>
     <string name="unKnownError">"알 수 없는 오류가 발생했습니다. 잠시후 다시 시도해주시길 바랍니다.</string>
-    <string name="timeMax">"최대 5분까지 가능합니다."</string>
-    <string name="timeMin">최소 1분까지 가능합니다.</string>
+    <string name="timeError">시간을 입력해주세요.</string>
     <string name="problemMax">"최대 5문제까지 가능합니다."</string>
     <string name="problemMin">최소 1문제까지 가능합니다.</string>
     <string name="confirm">확인</string>
